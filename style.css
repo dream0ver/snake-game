@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.maze-container {
+    width: min-content;
+    border: 1px solid black;
+}
+
+.maze-row {
+    display: flex;
+}
+
+.maze-cell {
+    width: 40px;
+    height: 40px;
+    background-color: yellow;
+}
+
+.fruit {
+    background-color: red;
+}
+
+.snake {
+    background-color: blue;
+}
