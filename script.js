@@ -5,6 +5,7 @@ class Game {
     A: { x: 0, y: -1, opposite: "D" },
     D: { x: 0, y: 1, opposite: "A" },
   };
+  speed = 100;
   constructor(n) {
     if (Game.instance) return Game.instance;
     Game.instance = this;
@@ -22,7 +23,7 @@ class Game {
     this.drawBoard();
     this.spawnFruit();
     this.spawnSnake();
-    this.registerSnakeMoveEvent();
+    this.registerEvents();
   }
 
   spawnFruit() {
@@ -78,7 +79,37 @@ class Game {
     };
   }
 
-  registerSnakeMoveEvent(e) {
+  resetGame() {
+    clearInterval(this.moveInterval);
+    this.spawnFruit();
+    this.spawnSnake();
+    this.score = 0;
+    this.lastPressedKey = null;
+  }
+
+  handleOnEat() {
+    this.score += 1;
+    this.spawnFruit();
+    // const tail = { ...this.snake[this.snake.length - 1] };
+    // console.log(tail);
+    // const { x: dx, y: dy } = this.buttonMap[this.lastPressedKey];
+    // tail.x = tail.x - dx;
+    // tail.y = tail.y - dy;
+    // this.snake.push(tail);
+    // console.log(tail);
+  }
+
+  moveSnake() {
+    const { x: dx, y: dy } = this.buttonMap[this.lastPressedKey];
+    this.getCell(this.snake[0]).classList.remove("snake");
+    this.snake[0].x += dx;
+    this.snake[0].y += dy;
+    if (this.isFruitInSnakeMouth()) this.handleOnEat();
+    if (this.isOutofBound()) this.resetGame();
+    this.getCell(this.snake[0]).classList.add("snake");
+  }
+
+  registerEvents(e) {
     document.body.addEventListener("keypress", (e) => {
       const pressedKey = e.key.toUpperCase();
 
@@ -88,26 +119,8 @@ class Game {
 
       clearInterval(this.moveInterval);
 
-      this.moveInterval = setInterval(() => {
-        this.lastPressedKey = pressedKey;
-        const { x: dx, y: dy } = this.buttonMap[pressedKey];
-        this.getCell(this.snake[0]).classList.remove("snake");
-        this.snake[0].x += dx;
-        this.snake[0].y += dy;
-        if (this.isOutofBound()) {
-          clearInterval(this.moveInterval);
-          this.spawnFruit();
-          this.spawnSnake();
-          this.score = 0;
-          this.lastPressedKey = null;
-          return;
-        }
-        if (this.isFruitInSnakeMouth()) {
-          this.score += 1;
-          this.spawnFruit();
-        }
-        this.getCell(this.snake[0]).classList.add("snake");
-      }, 100);
+      this.lastPressedKey = pressedKey;
+      this.moveInterval = setInterval(() => this.moveSnake(), this.speed);
     });
   }
 }
