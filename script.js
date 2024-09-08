@@ -27,7 +27,7 @@ class Game {
   }
 
   onNewGame() {
-    this.updateMsg(`Score:${this.score}`);
+    this.updateMsg({ type: "score", value: this.score });
     this.toggleAudioPlayback(true);
   }
 
@@ -58,7 +58,7 @@ class Game {
   }
 
   drawBoard() {
-    this.updateMsg("Use W, A, S, D to move the snake");
+    this.updateMsg({ type: "instructions" });
     for (let i = 0; i < this.n; i++) {
       const row = document.createElement("div");
       row.classList.add("maze-row");
@@ -92,7 +92,7 @@ class Game {
   }
 
   resetGame() {
-    this.updateMsg("Game Over");
+    this.updateMsg({ type: "gameover" });
     this.toggleAudioPlayback(false);
     clearInterval(this.moveInterval);
     this.spawnFruit();
@@ -101,21 +101,28 @@ class Game {
     this.lastPressedKey = null;
   }
 
-  updateMsg(msg) {
-    document.getElementById("game-score").textContent = msg;
+  updateMsg({ type, value }) {
+    const tag = document.getElementById("game-score");
+    switch (type) {
+      case "gameover": {
+        tag.textContent = "Game Over";
+        break;
+      }
+      case "instructions": {
+        tag.textContent = "Use W, A, S, D to move the snake";
+        break;
+      }
+      case "score": {
+        tag.textContent = `Score ${value}`;
+        break;
+      }
+    }
   }
 
   handleOnEat() {
     this.score += 5;
     this.spawnFruit();
-    this.updateMsg(`Score:${this.score}`);
-    // const tail = { ...this.snake[this.snake.length - 1] };
-    // console.log(tail);
-    // const { x: dx, y: dy } = this.buttonMap[this.lastPressedKey];
-    // tail.x = tail.x - dx;
-    // tail.y = tail.y - dy;
-    // this.snake.push(tail);
-    // console.log(tail);
+    this.updateMsg({ type: "score", value: this.score });
   }
 
   moveSnake() {
