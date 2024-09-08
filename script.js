@@ -5,7 +5,7 @@ class Game {
     A: { x: 0, y: -1, opposite: "D" },
     D: { x: 0, y: 1, opposite: "A" },
   };
-  speed = 100;
+  speed = 160;
   constructor(n) {
     if (Game.instance) return Game.instance;
     Game.instance = this;
@@ -20,6 +20,7 @@ class Game {
 
   init() {
     this.createNodes();
+    this.loadAudio();
     this.drawBoard();
     this.spawnFruit();
     this.spawnSnake();
@@ -40,21 +41,39 @@ class Game {
       })
     );
 
+    document.body.append(this.gameBoard);
+  }
+
+  loadAudio() {
     this.gameBoard.append(
       Object.assign(document.createElement("audio"), {
-        id: "game-audio",
+        id: "game-audio-bgm",
         src: "./assets/bg.mp3",
         loop: true,
         preload: "auto",
       })
     );
 
-    document.body.append(this.gameBoard);
+    this.gameBoard.append(
+      Object.assign(document.createElement("audio"), {
+        id: "game-audio-dead",
+        src: "./assets/dead.mp3",
+        preload: "auto",
+      })
+    );
+
+    this.gameBoard.append(
+      Object.assign(document.createElement("audio"), {
+        id: "game-audio-collect",
+        src: "./assets/collect.mp3",
+        preload: "auto",
+      })
+    );
   }
 
   onNewGame() {
     this.updateMsg({ type: "score", value: this.score });
-    this.toggleAudioPlayback(true);
+    this.toggleAudioPlayback({ track: "bgm", action: true });
   }
 
   spawnFruit() {
@@ -99,8 +118,8 @@ class Game {
     }
   }
 
-  toggleAudioPlayback(action) {
-    const audio = document.getElementById("game-audio");
+  toggleAudioPlayback({ track, action }) {
+    const audio = document.getElementById(`game-audio-${track}`);
     audio.currentTime = 0;
     action ? audio.play() : audio.pause();
   }
@@ -119,7 +138,8 @@ class Game {
 
   resetGame() {
     this.updateMsg({ type: "gameover" });
-    this.toggleAudioPlayback(false);
+    this.toggleAudioPlayback({ track: "bgm", action: false });
+    this.toggleAudioPlayback({ track: "dead", action: true });
     clearInterval(this.moveInterval);
     this.spawnFruit();
     this.spawnSnake();
@@ -139,13 +159,14 @@ class Game {
         break;
       }
       case "score": {
-        tag.textContent = `Score ${value}`;
+        tag.textContent = `Score ${value.toString().padStart(8, 0)}`;
         break;
       }
     }
   }
 
   handleOnEat() {
+    this.toggleAudioPlayback({ track: "collect", action: true });
     this.score += 5;
     this.spawnFruit();
     this.updateMsg({ type: "score", value: this.score });

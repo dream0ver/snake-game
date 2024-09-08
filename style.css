@@ -28,6 +28,7 @@
     top: 1.25rem;
     left: 1.25rem;
     z-index: 1000;
+    color: #264652
 }
 
 #game-board {
@@ -52,13 +53,13 @@ body {
 .maze-cell {
     width: 40px;
     height: 40px;
-    background-color: yellow;
+    background-color: #e9c46a;
 }
 
 .fruit {
-    background-color: red;
+    background-color: #e76f51;
 }
 
 .snake {
-    background-color: blue;
+    background-color: #2a9d8f;
 }
