@@ -79,7 +79,7 @@ class Game {
   spawnFruit() {
     this.clearFruit();
     this.fruit = this.getRandomPoint();
-    this.getCell(this.fruit).classList.add("fruit");
+    this.getCell(this.fruit)?.classList.add("fruit");
   }
 
   clearFruit() {
@@ -91,13 +91,17 @@ class Game {
     const { x, y } = this.getRandomPoint();
     for (let i = 0; i < 3; i++) {
       this.snake[i] = { x, y: y - i };
-      this.getCell(this.snake[i]).classList.add("snake");
+      this.getCell(this.snake[i])?.classList.add(
+        i == 0 ? "snake-head" : "snake"
+      );
     }
   }
 
   clearDeadSnake() {
     for (let i = 0; i < this.snake.length; i++) {
-      this.getCell(this.snake[i])?.classList.remove("snake");
+      this.getCell(this.snake[i])?.classList.remove(
+        i == 0 ? "snake-head" : "snake"
+      );
     }
     this.snake = [];
   }
@@ -117,11 +121,11 @@ class Game {
     this.updateMsg({ type: "instructions" });
     for (let i = 0; i < this.n; i++) {
       const row = document.createElement("div");
-      row.classList.add("maze-row");
+      row?.classList.add("maze-row");
       row.id = `row-${i}`;
       for (let j = 0; j < this.n; j++) {
         const cell = document.createElement("div");
-        cell.classList.add("maze-cell");
+        cell?.classList.add("maze-cell");
         cell.id = `${row.id}-col-${j}`;
         row.append(cell);
       }
@@ -183,18 +187,28 @@ class Game {
     this.updateMsg({ type: "score", value: this.score });
   }
 
-  moveSnake() {
-    const { x: dx, y: dy } = this.buttonMap[this.lastPressedKey];
+  pruneSnakeTail() {
     const currentTailIdx = this.snake.length - 1;
-    this.getCell(this.snake[currentTailIdx]).classList.remove("snake");
+    this.getCell(this.snake[currentTailIdx])?.classList.remove("snake");
     this.snake.splice(currentTailIdx, 1);
+  }
+
+  updateSnakeHead() {
+    const { x: dx, y: dy } = this.buttonMap[this.lastPressedKey];
+    this.getCell(this.snake[0])?.classList.remove("snake-head");
+    this.getCell(this.snake[0])?.classList.add("snake");
     const newHead = { ...this.snake[0] };
     newHead.x += dx;
     newHead.y += dy;
     this.snake.unshift(newHead);
+    this.getCell(this.snake[0])?.classList.add("snake-head");
+  }
+
+  moveSnake() {
+    this.pruneSnakeTail();
+    this.updateSnakeHead();
     if (this.isFruitInSnakeMouth()) this.handleOnEat();
     if (this.isOutofBound()) this.resetGame();
-    this.getCell(this.snake[0]).classList.add("snake");
   }
 
   registerEvents(e) {

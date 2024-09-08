@@ -61,3 +61,7 @@ body {
 .snake {
     background-color: #2a9d8f;
 }
+
+.snake-head {
+    background-color: #138376;
+}
