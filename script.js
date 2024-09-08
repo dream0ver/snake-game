@@ -14,7 +14,6 @@ class Game {
     this.snake = [];
     this.lastPressedKey;
     this.moveInterval;
-
     this.init();
   }
 
@@ -30,17 +29,12 @@ class Game {
   createNodes() {
     this.gameBoard = document.createElement("div");
     this.gameBoard.id = "game-board";
-
     this.gameBoard.append(
-      Object.assign(document.createElement("span"), { id: "game-score" })
-    );
-
-    this.gameBoard.append(
+      Object.assign(document.createElement("span"), { id: "game-score" }),
       Object.assign(document.createElement("div"), {
         id: "game-scan-lines",
       })
     );
-
     document.body.append(this.gameBoard);
   }
 
@@ -111,6 +105,15 @@ class Game {
     return x < 0 || x > this.n - 1 || y < 0 || y > this.n - 1;
   }
 
+  snakeBitItself() {
+    const head = this.snake[0];
+    for (let i = 1; i < this.snake.length; i++) {
+      const { x, y } = this.snake[i];
+      if (x == head.x && y == head.y) return true;
+    }
+    return false;
+  }
+
   isFruitInSnakeMouth() {
     const { x: xSnake, y: ySnake } = this.snake[0];
     const { x: xFruit, y: yFruit } = this.fruit;
@@ -166,7 +169,7 @@ class Game {
     const tag = document.getElementById("game-score");
     switch (type) {
       case "gameover": {
-        tag.textContent = "Game Over";
+        tag.textContent = "Dream Over";
         break;
       }
       case "instructions": {
@@ -185,6 +188,7 @@ class Game {
     this.score += 5;
     this.spawnFruit();
     this.updateMsg({ type: "score", value: this.score });
+    this.updateSnakeHead();
   }
 
   pruneSnakeTail() {
@@ -205,10 +209,10 @@ class Game {
   }
 
   moveSnake() {
+    if (this.isOutofBound() || this.snakeBitItself()) return this.resetGame();
+    if (this.isFruitInSnakeMouth()) return this.handleOnEat();
     this.pruneSnakeTail();
     this.updateSnakeHead();
-    if (this.isFruitInSnakeMouth()) this.handleOnEat();
-    if (this.isOutofBound()) this.resetGame();
   }
 
   registerEvents(e) {
@@ -229,4 +233,4 @@ class Game {
   }
 }
 
-const game = new Game(20);
+const game = new Game(24);
