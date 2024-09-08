@@ -14,16 +14,42 @@ class Game {
     this.snake = [];
     this.lastPressedKey;
     this.moveInterval;
-    this.gameBoard = document.getElementById("game-board");
-    this.gameBoard.classList.add("maze-container");
+
     this.init();
   }
 
   init() {
+    this.createNodes();
     this.drawBoard();
     this.spawnFruit();
     this.spawnSnake();
     this.registerEvents();
+  }
+
+  createNodes() {
+    this.gameBoard = document.createElement("div");
+    this.gameBoard.id = "game-board";
+
+    this.gameBoard.append(
+      Object.assign(document.createElement("span"), { id: "game-score" })
+    );
+
+    this.gameBoard.append(
+      Object.assign(document.createElement("div"), {
+        id: "game-scan-lines",
+      })
+    );
+
+    this.gameBoard.append(
+      Object.assign(document.createElement("audio"), {
+        id: "game-audio",
+        src: "./assets/bg.mp3",
+        loop: true,
+        preload: "auto",
+      })
+    );
+
+    document.body.append(this.gameBoard);
   }
 
   onNewGame() {
