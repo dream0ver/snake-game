@@ -1,7 +1,25 @@
+@font-face {
+    font-family: "PressStart2P-Regular";
+    src: url("./assets/PressStart2P-Regular.ttf");
+}
+
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "PressStart2P-Regular";
+}
+
+#game-score {
+    position: absolute;
+    font-size: 1.25rem;
+    top: 1.25rem;
+    left: 1.25rem;
+}
+
+#game-board {
+    position: relative;
 }
 
 body {
@@ -9,11 +27,11 @@ body {
     height: 100vh;
     justify-content: center;
     align-items: center;
+    background-color: black;
 }
 
 .maze-container {
     width: min-content;
-    border: 1px solid black;
 }
 
 .maze-row {
