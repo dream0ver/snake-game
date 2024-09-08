@@ -5,7 +5,7 @@ class Game {
     A: { x: 0, y: -1, opposite: "D" },
     D: { x: 0, y: 1, opposite: "A" },
   };
-  speed = 160;
+  speed = 100;
   constructor(n) {
     if (Game.instance) return Game.instance;
     Game.instance = this;
@@ -87,8 +87,19 @@ class Game {
   }
 
   spawnSnake() {
-    this.snake[0] = this.getRandomPoint();
-    this.getCell(this.snake[0]).classList.add("snake");
+    this.clearDeadSnake();
+    const { x, y } = this.getRandomPoint();
+    for (let i = 0; i < 3; i++) {
+      this.snake[i] = { x, y: y - i };
+      this.getCell(this.snake[i]).classList.add("snake");
+    }
+  }
+
+  clearDeadSnake() {
+    for (let i = 0; i < this.snake.length; i++) {
+      this.getCell(this.snake[i])?.classList.remove("snake");
+    }
+    this.snake = [];
   }
 
   isOutofBound() {
@@ -174,9 +185,13 @@ class Game {
 
   moveSnake() {
     const { x: dx, y: dy } = this.buttonMap[this.lastPressedKey];
-    this.getCell(this.snake[0]).classList.remove("snake");
-    this.snake[0].x += dx;
-    this.snake[0].y += dy;
+    const currentTailIdx = this.snake.length - 1;
+    this.getCell(this.snake[currentTailIdx]).classList.remove("snake");
+    this.snake.splice(currentTailIdx, 1);
+    const newHead = { ...this.snake[0] };
+    newHead.x += dx;
+    newHead.y += dy;
+    this.snake.unshift(newHead);
     if (this.isFruitInSnakeMouth()) this.handleOnEat();
     if (this.isOutofBound()) this.resetGame();
     this.getCell(this.snake[0]).classList.add("snake");
