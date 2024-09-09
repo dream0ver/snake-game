@@ -1,10 +1,11 @@
 const { app, BrowserWindow } = require("electron");
-const path = require("node:path");
+const path = require("path");
 
 const createWindow = () => {
   const win = new BrowserWindow({
     maximizable: false,
     minimizable: false,
+    icon: path.join(__dirname, "favicon.ico"),
     webPreferences: {
       devTools: false,
     },
