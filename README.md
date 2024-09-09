@@ -4,6 +4,8 @@
 
 This project is an Electron-based game that runs on both Windows and macOS. The instructions below will guide you on how to run the game in development mode and package the game for different platforms.
 
+![alt text](https://github.com/dream0ver/snake-game/blob/main/snake-screen-shot.png?raw=true)
+
 ## Running in Development Mode
 
 1. Clone the repository to your local machine.
