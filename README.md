@@ -23,13 +23,20 @@ This project is an Electron-based game that runs on both Windows and macOS. The 
 
 You can package the game for different operating systems using the following commands:
 
-1. Windows: To build the game for Windows:
+1. Clone the repository to your local machine.
+2. Install the required dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. Windows: To build the game for Windows:
 
    ```bash
    npm run make-windows
    ```
 
-2. Windows: To build the game for Mac OS:
+5. Windows: To build the game for Mac OS:
 
    ```bash
    npm run make-osx
