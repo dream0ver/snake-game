@@ -5,7 +5,7 @@ class Game {
     A: { x: 0, y: -1, opposite: "D" },
     D: { x: 0, y: 1, opposite: "A" },
   };
-  speed = 100;
+  speed = 83.33;
   constructor(n) {
     if (Game.instance) return Game.instance;
     Game.instance = this;
@@ -42,7 +42,7 @@ class Game {
     this.gameBoard.append(
       Object.assign(document.createElement("audio"), {
         id: "game-audio-bgm",
-        src: "./assets/bg.mp3",
+        src: "./assets/audio/bg.mp3",
         loop: true,
         preload: "auto",
       })
@@ -51,7 +51,7 @@ class Game {
     this.gameBoard.append(
       Object.assign(document.createElement("audio"), {
         id: "game-audio-dead",
-        src: "./assets/dead.mp3",
+        src: "./assets/audio/dead.mp3",
         preload: "auto",
       })
     );
@@ -59,7 +59,7 @@ class Game {
     this.gameBoard.append(
       Object.assign(document.createElement("audio"), {
         id: "game-audio-collect",
-        src: "./assets/collect.mp3",
+        src: "./assets/audio/collect.mp3",
         preload: "auto",
       })
     );

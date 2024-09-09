@@ -1,6 +1,6 @@
 @font-face {
     font-family: "PressStart2P-Regular";
-    src: url("./assets/PressStart2P-Regular.ttf");
+    src: url("./assets/font/PressStart2P-Regular.ttf");
 }
 
 #game-scan-lines {
@@ -9,7 +9,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url(./assets/scanlines.jpg);
+    background-image: url(./assets/image/scanlines.jpg);
     background-repeat: no-repeat;
     background-size: 100% 100%;
     opacity: 0.2;
