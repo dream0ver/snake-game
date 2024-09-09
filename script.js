@@ -177,7 +177,11 @@ class Game {
         break;
       }
       case "score": {
-        tag.textContent = `Score ${value.toString().padStart(8, 0)}`;
+        tag.innerHTML = `
+        <span>Score</span>
+        <br/>
+        <span>${value.toString().padStart(8, 0)}</span>
+        `;
         break;
       }
     }
