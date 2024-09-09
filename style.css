@@ -35,14 +35,6 @@
     position: relative;
 }
 
-body {
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-    background-color: black;
-}
-
 .maze-row {
     display: flex;
 }

@@ -169,7 +169,7 @@ class Game {
     const tag = document.getElementById("game-score");
     switch (type) {
       case "gameover": {
-        tag.textContent = "Dream Over";
+        tag.textContent = "Game Over";
         break;
       }
       case "instructions": {
