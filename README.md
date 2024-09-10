@@ -44,4 +44,4 @@ You can package the game for different operating systems using the following com
    npm run make-osx
    ```
 
-The packaged game files will be stored in the dist folder.
+The packaged game files will be stored in the builds folder.

@@ -7,8 +7,8 @@
   "version": "1.0.0",
   "scripts": {
     "start": "tsc && electron .",
-    "make-windows": "tsc && npx @electron/packager . --platform=win32 --arch=x64 --out=./dist --overwrite",
-    "make-osx": "tsc && npx @electron/packager . --platform=darwin --arch=universal --out=./dist --overwrite"
+    "make-windows": "tsc && npx @electron/packager . --platform=win32 --arch=x64 --out=./builds --overwrite",
+    "make-osx": "tsc && npx @electron/packager . --platform=darwin --arch=universal --out=./builds --overwrite"
   },
   "devDependencies": {
     "electron": "^32.0.2",
