@@ -5,13 +5,13 @@ const createWindow = () => {
   const win = new BrowserWindow({
     maximizable: false,
     minimizable: false,
-    icon: path.join(__dirname, "favicon.ico"),
+    icon: path.join(__dirname, "public", "assets", "icon", "favicon.ico"),
     webPreferences: {
       devTools: false,
     },
   });
 
-  win.loadFile("index.html");
+  win.loadFile(path.join(__dirname, "public", "index.html"));
   win.setMenuBarVisibility(false);
   win.setTitle("Snake by dream0ver");
   win.setResizable(false);

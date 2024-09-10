@@ -6,12 +6,13 @@
   "main": "main.js",
   "version": "1.0.0",
   "scripts": {
-    "start": "electron .",
-    "make-windows": "npx @electron/packager . --platform=win32 --arch=x64 --out=./dist --overwrite",
-    "make-osx": "npx @electron/packager . --platform=darwin --arch=universal --out=./dist --overwrite"
+    "start": "tsc && electron .",
+    "make-windows": "tsc && npx @electron/packager . --platform=win32 --arch=x64 --out=./dist --overwrite",
+    "make-osx": "tsc && npx @electron/packager . --platform=darwin --arch=universal --out=./dist --overwrite"
   },
   "devDependencies": {
-    "electron": "^32.0.2"
+    "electron": "^32.0.2",
+    "typescript": "^5.6.2"
   },
   "dependencies": {
     "@electron/packager": "^18.3.4"
