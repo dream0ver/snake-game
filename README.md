@@ -21,7 +21,7 @@ This project is an Electron-based game that runs on both Windows and macOS. The 
    npm start
    ```
 
-## Building for Production
+## Building Application for Production
 
 You can package the game for different operating systems using the following commands:
 
